@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search</title>
     <script src="/static/search.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Search</h1>
-    <form action="javascript:void(0)" method="get">
-        <input type="text" name="query" placeholder="Search...">
-        <input type="submit" value="Search">
-    </form>
+    <div class="searchParent">
+        <h1>Search</h1>
+        <form action="javascript:void(0)" method="get">
+            <input type="text" name="query" placeholder="Search...">
+            <button><img src="/static/search.svg" style="height: 1.5em;" draggable="false"></button>
+        </form>
+    </div>
 </body>
 </html>
