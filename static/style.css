@@ -63,6 +63,8 @@ button:active{
     padding: 20px;
     width: 30vw;
     height: 40vh;
+    max-width: 100vw;
+    min-width: min(30em, calc(100vw - 4em));
 }
 .settingsBg{
     display: none;
