@@ -12,8 +12,29 @@
         <h1>Search</h1>
         <form action="javascript:void(0)" method="get">
             <input type="text" name="query" placeholder="Search...">
-            <button><img src="/static/search.svg" style="height: 1.5em;" draggable="false"></button>
+            <button class="searchButton"><img src="/static/search.svg" style="height: 1.5em;" draggable="false"></button>
         </form>
+        <button class="settingsButton"><img src="/static/settings.svg" style="height: 1.5em;" draggable="false"></button>
     </div>
+
+    <div class="settingsBg">
+        <div class="settings">
+            <h1>Settings</h2>
+            <h2>Default bang</h2>
+            <input class="defaultBangInput" placeholder="Default bang">
+            <h2>Custom bangs</h2>
+            <div class="customBangsParent">
+                <div class="settingsBangGroup">
+                    <input class="settingsBang" placeholder="New bang">
+                    <input class="settingsUrl" placeholder="URL (use %s for search term)">
+                    <button class="settingsBangButton">+</button>
+                </div>
+                <div class="customBangs">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

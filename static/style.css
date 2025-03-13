@@ -29,11 +29,15 @@ input[type="text"]{
     border-radius: 5px 0px 0px 5px;
     border: none;
 }
+.searchButton{
+    border-radius: 0px 5px 5px 0px;
+    width: calc(1.5em + 20px);
+
+}
 button{
     padding: 10px;
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 5px;
     border: none;
-    width: calc(1.5em + 20px);
     background: #fff0;
     transition: background-color 150ms;
 }
@@ -42,4 +46,58 @@ button:hover{
 }
 button:active{
     background: #0003;
+}
+
+.settingsButton{
+    position: fixed;
+    right: 2em;
+    bottom: 2em;
+    box-shadow: 0px 0px 5px #00000085;
+}
+
+.settings{
+    box-shadow: 0px 0px 15px #00000085;
+    border-radius: 10px;
+    position: absolute;
+    background-color: white;
+    padding: 20px;
+    width: 30vw;
+    height: 40vh;
+}
+.settingsBg{
+    display: none;
+    backdrop-filter: blur(4px) brightness(0.9);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+}
+
+.settingsBang{
+    width: 5em;
+}
+.settingsUrl{
+    width: 100%;
+    margin-left: .5em;
+    margin-right: .5em;
+}
+.settingsBangGroup{
+    display: flex;
+    margin-bottom: 10px;
+}
+.settingsBangGroup>*,.defaultBangInput{
+    box-shadow: 0px 0px 5px #00000085;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.defaultBangInput{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.settingsBangButton{
+    width: calc(1.5em + 20px);
 }
