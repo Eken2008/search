@@ -33,7 +33,9 @@ const search = (query,replace) => {
 }
 
 let bangs = null;
-if (localStorage.getItem("localBangs")===null){localStorage.setItem("localBangs", JSON.stringify([]));}
+if (localStorage.getItem("localBangs")===null){
+    localStorage.setItem("localBangs", JSON.stringify([]));
+}
 const loadBangs = () => {
     bangs = JSON.parse(localStorage.getItem("localBangs")).concat(JSON.parse(localStorage.getItem("bangs")));
 }
@@ -47,7 +49,7 @@ const onloadSearch = () => {
 loadBangs();
 if (localStorage.getItem("bangs")===null){
     fetch("/static/bangs.json").then(resp=>resp.json()).then(resp=>{
-        localStorage.setItem("bangs", JSON.stringify(bangs));
+        localStorage.setItem("bangs", JSON.stringify(resp));
         loadBangs();
         onloadSearch();
     })
