@@ -59,7 +59,6 @@ const onloadSearch = () => {
     }
 }
 
-loadBangs();
 if (localStorage.getItem("bangs")===null){
     fetch("/static/bangs.json").then(resp=>resp.json()).then(resp=>{
         console.log( JSON.stringify(resp))
@@ -69,6 +68,7 @@ if (localStorage.getItem("bangs")===null){
     })
 }
 else{
+    loadBangs();
     onloadSearch();
 }
 
