@@ -10,7 +10,17 @@ const searchWithBang = (query,bang) => {
 
     bangs.forEach(element => {
         if (element.t===bang) {
-            _search(element.u, query);
+            if (query.length===0){
+                if (element.d){
+                    _search("https://"+element.d, query);
+                }
+                else{
+                    _search("https://"+(element.u.split("/")[2]), query);
+                }
+            }
+            else{
+                _search(element.u, query);
+            }
         }
     });
 }
