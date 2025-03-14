@@ -62,9 +62,11 @@ button:active{
     background-color: white;
     padding: 20px;
     width: 30vw;
-    height: 40vh;
+    min-height: min(40vh, calc(100vh - 4em));
     max-width: 100vw;
     min-width: min(30em, calc(100vw - 4em));
+    max-height: calc(100vh - 4em);
+    overflow: scroll;
 }
 .settingsBg{
     display: none;
@@ -83,6 +85,7 @@ button:active{
     width: 100%;
     margin-left: .5em;
     margin-right: .5em;
+    min-width: 4em;
 }
 .settingsBangGroup{
     display: flex;
