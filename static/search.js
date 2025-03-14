@@ -14,7 +14,6 @@ const searchWithBang = (query,bang) => {
         if (bangFound){return;}
         if (element.t===bang) {
             bangFound=true;
-            //TODO: If not {{{s}}} in element.u, go to full element.u, not element.d
             if (!element.u.includes("{{{s}}}")){
                 _search(element.u, query);
                 return;
@@ -71,7 +70,7 @@ if (localStorage.getItem("localBangs")===null){
     localStorage.setItem("localBangs", JSON.stringify([]));
 }
 const loadBangs = () => {
-    bangs = JSON.parse(localStorage.getItem("bangs")).concat(JSON.parse(localStorage.getItem("localBangs")));
+    bangs = JSON.parse(localStorage.getItem("localBangs")).concat(JSON.parse(localStorage.getItem("bangs")));
 }
 
 const onloadSearch = () => {
@@ -125,7 +124,7 @@ const openSettings = () => {
 
             const localBangs = JSON.parse(localStorage.getItem("localBangs"));
             for(const storedBang of localBangs){
-                if (storedBang.u.replace("https://","")===url&&storedBang.t===bang){
+                if (storedBang.u.replace("https://","")===url.replace("%s","{{{s}}}")&&storedBang.t===bang){
                     localBangs.splice(localBangs.indexOf(storedBang),1);
                     localStorage.setItem("localBangs", JSON.stringify(localBangs));
                     loadBangs();
