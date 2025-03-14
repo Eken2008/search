@@ -55,7 +55,10 @@ const loadBangs = () => {
 
 const onloadSearch = () => {
     if (window.location.hash.includes("#query=")){
-        search(decodeURI(window.location.hash).replace('#query=', ''),true)
+        const query = decodeURI(window.location.hash).replace('#query=', '')
+        if (query.trim()!=="!ose"){
+            search(query,true)
+        }
     }
 }
 
@@ -153,4 +156,8 @@ window.onkeydown = (e) => {
     if (e.key==="Escape"){
         document.querySelector(".settingsBg").style.display="none";
     }
+}
+
+window.onhashchange = (e) => {
+    onloadSearch();
 }
