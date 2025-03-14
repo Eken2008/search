@@ -8,8 +8,10 @@ const searchWithBang = (query,bang) => {
         }
     }
 
+    let bangFound = false;
     bangs.forEach(element => {
         if (element.t===bang) {
+            bangFound=true;
             if (query.length===0){
                 if (element.d){
                     _search("https://"+element.d, query);
@@ -23,6 +25,9 @@ const searchWithBang = (query,bang) => {
             }
         }
     });
+    if (!bangFound){
+        searchWithBang("!"+bang+query,getDefaultBang());
+    }
 }
 
 const search = (query) => {
@@ -44,7 +49,6 @@ const search = (query) => {
     else{
         searchWithBang(query,getDefaultBang());
     }
-
 }
 
 const getDefaultBang = () => {
@@ -115,9 +119,9 @@ const openSettings = () => {
             const localBangs = JSON.parse(localStorage.getItem("localBangs"));
             for(const storedBang of localBangs){
                 if (storedBang.u.replace("https://","")===url&&storedBang.t===bang){
-                    console.log("aa",localBangs.indexOf(storedBang))
                     localBangs.splice(localBangs.indexOf(storedBang),1);
                     localStorage.setItem("localBangs", JSON.stringify(localBangs));
+                    loadBangs();
                     openSettings();
                     return;
                 }
@@ -154,6 +158,7 @@ window.onload = () => {
         e.target.parentElement.firstElementChild.value="";
         e.target.parentElement.querySelector(".settingsUrl").value="";
         openSettings();
+        loadBangs();
     }
 
     document.querySelector(".defaultBangInput").onkeydown = (e) => {
