@@ -1,5 +1,10 @@
 from sanic import *
 from sanic_ext import render
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 app = Sanic(__name__)
 
@@ -16,4 +21,4 @@ async def search(request:Request):
 
 
 if __name__ == "__main__":
-    app.run("0.0.0.0",2007,dev=True)
+    app.run("0.0.0.0",int(os.environ["PORT"]),dev=True)
