@@ -150,6 +150,15 @@ window.onload = () => {
         localStorage.setItem("defaultBang", e.target.value);
 
     }
+
+    document.querySelector(".settingsBg").onclick = (e) => {
+        if (!document.querySelector(".settings").matches(':hover')){
+            document.querySelector(".settingsBg").style.display="none";
+        }
+    }
+    document.querySelector(".closeButton").onclick = (e) => {
+        document.querySelector(".settingsBg").style.display="none";
+    }
 }
 
 window.onkeydown = (e) => {
