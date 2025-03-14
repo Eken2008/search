@@ -1,4 +1,5 @@
 const searchWithBang = (query,bang) => {
+    query=query.trim();
     const _search = (url,query) => {
         if(window.location.hash.includes("#query=")){
             window.location.replace(url.replace("{{{s}}}", encodeURI(query)))
@@ -10,8 +11,14 @@ const searchWithBang = (query,bang) => {
 
     let bangFound = false;
     bangs.forEach(element => {
+        if (bangFound){return;}
         if (element.t===bang) {
             bangFound=true;
+            //TODO: If not {{{s}}} in element.u, go to full element.u, not element.d
+            if (!element.u.includes("{{{s}}}")){
+                _search(element.u, query);
+                return;
+            }
             if (query.length===0){
                 if (element.d){
                     _search("https://"+element.d, query);
