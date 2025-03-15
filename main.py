@@ -10,6 +10,10 @@ app = Sanic(__name__)
 
 app.static("/static","./static")
 
+@app.middleware('response')
+def set_service_worker_header(request, response):
+    response.headers['Service-Worker-Allowed'] = '/'
+
 
 @app.route('/')
 async def index(request:Request):
