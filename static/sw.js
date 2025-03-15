@@ -4,6 +4,7 @@ const CACHE_NAME = 'search-app-v1';
 // Assets to cache on install
 const STATIC_ASSETS = [
     '/static/search.js',
+    '/static/settings.js',
     '/static/main.js',
     '/static/style.css',
     '/static/search.svg',

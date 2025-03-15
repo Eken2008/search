@@ -1,193 +1,118 @@
-const searchWithBang = (query,bang) => {
-    query=query.trim();
-    const _search = (url,query) => {
-        if(window.location.hash.includes("#query=")){
-            window.location.replace(url.replace("{{{s}}}", encodeURI(query)))
+const searchWithBang = (query, bang) => {
+    query = query.trim();
+    const _search = (url, query) => {
+        // If the user searches from the address bar, don't add / to the history
+        if (window.location.hash.includes("#query=") && window.location.hash!=="#query=!ose"){
+            window.location.replace(url.replace("{{{s}}}", encodeURI(query)));
         }
         else{
-            window.location.href = url.replace("{{{s}}}", encodeURI(query))
+            window.location.href = url.replace("{{{s}}}", encodeURI(query));
         }
     }
 
-    let bangFound = false;
-    bangs.forEach(element => {
-        if (bangFound){return;}
+    for (const element of bangs){
         if (element.t===bang) {
-            bangFound=true;
+            // Go to full url if there is no placeholder for query
             if (!element.u.includes("{{{s}}}")){
                 _search(element.u, query);
                 return;
             }
+            // If query is empty, go to main page of the site
             if (query.length===0){
                 if (element.d){
                     _search("https://"+element.d, query);
                 }
+                // If there is no main page specified, go to / of the site
                 else{
                     _search("https://"+(element.u.split("/")[2]), query);
                 }
+                return;
             }
-            else{
-                _search(element.u, query);
-            }
+            // If there is a placeholder for query and query is not empty, go to the url with the query
+            _search(element.u, query);
+            return;
         }
-    });
-    if (!bangFound){
-        searchWithBang("!"+bang+query,getDefaultBang());
     }
+    // If no bang is found, search with the default bang
+    searchWithBang("!"+bang+query, getDefaultBang());
 }
+
 
 const search = (query) => {
+    const expr = RegExp(/![A-z0-9]+/);
 
-    let expr=RegExp(/![A-z0-9]+/);
-
-    let match = query.match(expr);
+    const match = query.match(expr);
 
     if (match) {
-        let bang = match[0].replace('!', '');
+        const bang = match[0].replace('!', '');
         query = query.replace(match[0], '');
 
+        // Remove all + (whitespace) from the beginning of the query
         while (query.startsWith("+")){
-            query=query.replace("+","");
+            query = query.replace("+", "");
         }
-        
-        searchWithBang(query,bang);
+
+        searchWithBang(query, bang);
     }
     else{
-        searchWithBang(query,getDefaultBang());
+        searchWithBang(query, getDefaultBang());
     }
-}
-
-const getDefaultBang = () => {
-    return localStorage.getItem("defaultBang");
-}
-
-if (!localStorage.getItem("defaultBang")){
-    localStorage.setItem("defaultBang", "ddg");
-}
-
-let bangs = null;
-if (localStorage.getItem("localBangs")===null){
-    localStorage.setItem("localBangs", JSON.stringify([]));
-}
-const loadBangs = () => {
-    bangs = JSON.parse(localStorage.getItem("localBangs")).concat(JSON.parse(localStorage.getItem("bangs")));
 }
 
 const onloadSearch = () => {
     if (window.location.hash.includes("#query=")){
-        const query = decodeURI(window.location.hash).replace('#query=', '')
+        const query = decodeURI(window.location.hash.replace("#query=", ""));
         if (query.trim()!=="!ose"){
-            search(query,true)
+            search(query);
         }
     }
 }
 
+
+
+
+// Bangs
+const getDefaultBang = () => {
+    return localStorage.getItem("defaultBang");
+}
+
+// Initialize local storage
+if (!localStorage.getItem("defaultBang")){
+    localStorage.setItem("defaultBang", "ddg");
+}
+if (localStorage.getItem("localBangs")===null){
+    localStorage.setItem("localBangs", JSON.stringify([]));
+}
+
+let bangs = null;
+const loadBangs = () => {
+    bangs = JSON.parse(localStorage.getItem("localBangs")).concat(JSON.parse(localStorage.getItem("bangs")));
+}
+
 if (localStorage.getItem("bangs")===null){
-    fetch("/static/bangs.json").then(resp=>resp.json()).then(resp=>{
-        console.log( JSON.stringify(resp))
-        localStorage.setItem("bangs", JSON.stringify(resp));
-        loadBangs();
-        onloadSearch();
-    })
+    // If there are no bangs in the local storage, fetch them from the server and search
+    fetch("/static/bangs.json")
+        .then(resp=>resp.json())
+        .then(bangs=>{
+            localStorage.setItem("bangs", JSON.stringify(bangs));
+            loadBangs();
+            onloadSearch();
+        });
 }
 else{
+    // If there are bangs in the local storage, load them and search
     loadBangs();
     onloadSearch();
 }
 
 
-const openSettings = () => {
-    document.querySelector(".customBangs").innerHTML="";
-    document.querySelector(".defaultBangInput").value=getDefaultBang();
-    for (const bang of JSON.parse(localStorage.getItem("localBangs"))) {
-
-        const group = document.createElement("div");
-        group.classList.add("settingsBangGroup");
-
-        const inputBang = document.createElement("input");
-        inputBang.classList.add("settingsBang");
-        inputBang.disabled=true;
-        inputBang.value = bang.t;
-        group.appendChild(inputBang);
-        const inputUrl = document.createElement("input");
-        inputUrl.classList.add("settingsUrl");
-        inputUrl.value = bang.u.replace("{{{s}}}", "%s").replace("https://","");
-        inputUrl.disabled=true;
-        group.appendChild(inputUrl);
-        const removeButton = document.createElement("button");
-        removeButton.innerHTML="-";
-        removeButton.classList.add("settingsBangButton");
-        group.appendChild(removeButton);
-        removeButton.onclick = () => {
-            const url = removeButton.parentElement.querySelector(".settingsUrl").value;
-            const bang = removeButton.parentElement.firstElementChild.value;
-
-            const localBangs = JSON.parse(localStorage.getItem("localBangs"));
-            for(const storedBang of localBangs){
-                if (storedBang.u.replace("https://","")===url.replace("%s","{{{s}}}")&&storedBang.t===bang){
-                    localBangs.splice(localBangs.indexOf(storedBang),1);
-                    localStorage.setItem("localBangs", JSON.stringify(localBangs));
-                    loadBangs();
-                    openSettings();
-                    return;
-                }
-            }
-        }
-        document.querySelector(".customBangs").appendChild(group);
-    }
-    document.querySelector(".settingsBg").style.display="flex";
-}
-
-
 window.onload = () => {
-    document.querySelector("form").onsubmit=(e)=>{
-        search(e.target.querySelector("input[name='query']").value);
-    }
-
-    document.querySelector(".settingsButton").onclick=openSettings;
-
-    document.querySelector(".settingsBangButton").onclick=(e)=>{
-        let bang = e.target.parentElement.firstElementChild.value;
-        let url = e.target.parentElement.querySelector(".settingsUrl").value.replace("%s", "{{{s}}}");
-        if (bang===""||url===""){
-            return;
-        }
-        if (!(url.startsWith("http://")||url.startsWith("https://"))){
-            url="https://"+url;
-        }
-        if (bang.startsWith("!")){
-            bang=bang.replace("!","");
-        }
-        const localBangs = JSON.parse(localStorage.getItem("localBangs"));
-        localBangs.unshift({t:bang,u:url});
-        localStorage.setItem("localBangs", JSON.stringify(localBangs));
-        e.target.parentElement.firstElementChild.value="";
-        e.target.parentElement.querySelector(".settingsUrl").value="";
-        openSettings();
-        loadBangs();
-    }
-
-    document.querySelector(".defaultBangInput").onkeydown = (e) => {
-        localStorage.setItem("defaultBang", e.target.value);
-
-    }
-
-    document.querySelector(".settingsBg").onclick = (e) => {
-        if (!document.querySelector(".settings").matches(':hover')){
-            document.querySelector(".settingsBg").style.display="none";
-        }
-    }
-    document.querySelector(".closeButton").onclick = (e) => {
-        document.querySelector(".settingsBg").style.display="none";
-    }
+    document.querySelector("form").addEventListener("submit",(e)=>{
+        e.preventDefault();
+        search(document.querySelector("input[name='query']").value);
+    })
 }
 
-window.onkeydown = (e) => {
-    if (e.key==="Escape"){
-        document.querySelector(".settingsBg").style.display="none";
-    }
-}
-
-window.onhashchange = (e) => {
+window.onhashchange = () => {
     onloadSearch();
 }
