@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search</title>
-    <script src="/static/search.js"></script>
-    <script src="/static/settings.js"></script>
-    <script src="/static/main.js"></script>
     <link rel="stylesheet" href="/static/style.css">
+    <meta name="description" content="Search the web using custom !bangs">
+    <script src="/static/search.js"></script>
 </head>
 <body>
+    <script src="/static/main.js" defer></script>
+    <script src="/static/settings.js" defer></script>
     <div class="searchParent">
         <h1>Search</h1>
         <form action="javascript:void(0)" method="get">
             <input type="search" name="query" placeholder="Search...">
-            <button class="searchButton"><img src="/static/search.svg" style="height: 1.5em;" draggable="false"></button>
+            <button aria-label="search button" class="searchButton"><img alt="search" src="/static/search.svg" style="height: 1.5em;" draggable="false"></button>
         </form>
-        <button class="settingsButton"><img src="/static/settings.svg" style="height: 1.5em;" draggable="false"></button>
+        <button class="settingsButton" aria-label="settings button"><img alt="settings" src="/static/settings.svg" style="height: 1.5em;" draggable="false"></button>
     </div>
 
     <div class="settingsBg">
