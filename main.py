@@ -21,4 +21,4 @@ async def index(request:Request):
 
 
 if __name__ == "__main__":
-    app.run("0.0.0.0",int(os.environ["PORT"]),dev=True)
+    app.run("0.0.0.0",int(os.environ["PORT"]),dev=os.environ["PROD"].lower()=="false")
