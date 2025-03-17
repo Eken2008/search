@@ -3,10 +3,10 @@ const searchWithBang = (query, bang) => {
     const _search = (url, query) => {
         // If the user searches from the address bar, don't add / to the history
         if (window.location.hash.includes("#query=") && window.location.hash!=="#query=!ose"){
-            window.location.replace(url.replace("{{{s}}}", encodeURI(query)));
+            window.location.replace(url.replace("{{{s}}}", query));
         }
         else{
-            window.location.href = url.replace("{{{s}}}", encodeURI(query));
+            window.location.href = url.replace("{{{s}}}", query);
         }
     }
 
