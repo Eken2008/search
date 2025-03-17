@@ -9,7 +9,8 @@ const STATIC_ASSETS = [
     '/static/style.css',
     '/static/search.svg',
     '/static/settings.svg',
-    '/index.html'
+    '/index.html',
+    '/search'
 ];
 
 

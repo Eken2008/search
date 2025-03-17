@@ -2,11 +2,11 @@ const searchWithBang = (query, bang) => {
     query = query.trim();
     const _search = (url, query) => {
         // If the user searches from the address bar, don't add / to the history
-        if (window.location.hash.includes("#query=") && window.location.hash!=="#query=!ose"){
-            window.location.replace(url.replace("{{{s}}}", query));
+        if (window.location.search.includes("?q=") && window.location.search!=="?q=!ose"){
+            window.location.replace(url.replace("{{{s}}}", encodeURIComponent(query)));
         }
         else{
-            window.location.href = url.replace("{{{s}}}", query);
+            window.location.href = url.replace("{{{s}}}", encodeURIComponent(query));
         }
     }
 
@@ -60,8 +60,8 @@ const search = (query) => {
 }
 
 const onloadSearch = () => {
-    if (window.location.hash.includes("#query=")){
-        const query = decodeURI(window.location.hash.replace("#query=", ""));
+    if (window.location.search.includes("?q=")){
+        const query = decodeURIComponent(window.location.search.replace("?q=", ""));
         if (query.trim()!=="!ose"){
             search(query);
         }
@@ -111,8 +111,4 @@ window.onload = () => {
         e.preventDefault();
         search(document.querySelector("input[name='query']").value);
     })
-}
-
-window.onhashchange = () => {
-    onloadSearch();
 }
