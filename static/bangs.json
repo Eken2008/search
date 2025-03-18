@@ -122052,7 +122052,8 @@
         "u": "http://astronet.ge/?s={{{s}}}"
     },
     {
-        "t":"ose",
-        "u": "https://search.bagottgames.uk/#query={{{s}}}"
+        "t": "ose",
+        "d": "search.bagottgames.uk",
+        "u": "https://search.bagottgames.uk/search?q={{{s}}}"
     }
 ]

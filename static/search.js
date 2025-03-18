@@ -2,7 +2,7 @@ const searchWithBang = (query, bang) => {
     query = query.trim();
     const _search = (url, query) => {
         // If the user searches from the address bar, don't add / to the history
-        if (window.location.search.includes("?q=") && window.location.search!=="?q=!ose"){
+        if (window.location.search.includes("?q=")){
             window.location.replace(url.replace("{{{s}}}", encodeURIComponent(query)));
         }
         else{
@@ -62,9 +62,7 @@ const search = (query) => {
 const onloadSearch = () => {
     if (window.location.search.includes("?q=")){
         const query = decodeURIComponent(window.location.search.replaceAll("+"," ").replace("?q=", ""));
-        if (query.trim()!=="!ose"){
-            search(query);
-        }
+        search(query);
     }
 }
 
