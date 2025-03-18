@@ -61,7 +61,7 @@ const search = (query) => {
 
 const onloadSearch = () => {
     if (window.location.search.includes("?q=")){
-        const query = decodeURIComponent(window.location.search.replace("?q=", ""));
+        const query = decodeURIComponent(window.location.search.replaceAll("+"," ").replace("?q=", ""));
         if (query.trim()!=="!ose"){
             search(query);
         }
