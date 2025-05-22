@@ -29,6 +29,9 @@ async def search(request:Request):
         mainScript = f.read()
     return html(searchTemplate.replace("{{searchScript}}",searchScript).replace("{{mainScript}}",mainScript).replace("{{query}}",request.args.get("q","")))
 
+@app.route("/calculator")
+async def calculator(request:Request):
+    return await render("calculator.html")
 
 if __name__ == "__main__":
     app.run("0.0.0.0",int(os.environ["PORT"]),dev=os.environ["PROD"].lower()=="false")

@@ -1,0 +1,75 @@
+.mainContainer {
+    display: flex;
+    justify-content: center;
+    font-family: arial;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mathBox {
+    width: 50vw;
+    border: 1px solid #757575;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.mathBox:focus-within {
+    outline: 2px solid #4d90fe;
+}
+
+.expression {
+    font-size: 2em;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    font-family: arial;
+    border: none;
+    outline: none;
+}
+
+.expression:active {
+    border: none;
+}
+
+.warning {
+    background: #ffcb007a;
+    margin: 5px -10px;
+    padding: 5px;
+}
+
+.answer {
+    color: #888;
+    text-align: right;
+}
+
+.keyboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.keyboard>button {
+    padding: 0px 20px;
+    border-radius: 10px;
+    border: none;
+    --bg: 0, 0, 255;
+    background: rgba(var(--bg),0.059)/*#e4e4ff*/;
+    height: 3em;
+    box-shadow: 0px 0px 4px #00000063;
+    transition: background-color 150ms;
+}
+.keyboard>button:hover{
+    background: rgba(var(--bg),.15)/*#e4e4ff*/;
+}
+.keyboard>button:active{
+    background: rgba(var(--bg),.3)/*#e4e4ff*/;
+}
+
+.keyboard>.number {
+    --bg: 0, 216, 255;
+}
+
+.keyboard>.basicOperator {
+    --bg: 255, 200, 0
+}
