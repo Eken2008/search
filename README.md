@@ -35,14 +35,14 @@ This is a lightweight web-based search application that allows users to search t
 2. Search for `browser.urlbar.update2.engineAliasRefresh` and set it to `true`.
 3. Navigate to `about:preferences#search`
 4. Press the "Add" button in the "Search Shortcuts" section
-5. Enter `https://search.bagottgames.uk/search?q=%s` as url.
+5. Enter `https://search.bagott.dev/search?q=%s` as url.
 6. Save the search engine and set it as default if desired.
 
 ### Chrome
 
 1. Open Chrome and go to `chrome://settings/searchEngines`.
 2. Under "Manage search engines," click "Add."
-3. Enter `https://search.bagottgames.uk/search?q=%s` as url.
+3. Enter `https://search.bagott.dev/search?q=%s` as url.
 4. Click "Add" and set it as the default search engine if preferred.
 
 
