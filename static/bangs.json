@@ -122053,7 +122053,7 @@
     },
     {
         "t": "ose",
-        "d": "search.bagottgames.uk",
-        "u": "https://search.bagottgames.uk/search?q={{{s}}}"
+        "d": "search.bagott.dev",
+        "u": "https://search.bagott.dev/search?q={{{s}}}"
     }
 ]
